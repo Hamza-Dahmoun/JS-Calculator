@@ -66,7 +66,7 @@ function startCalculation() {
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     userInput = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression,"");
     
-    numbersAndOperations = convertInputToArray(userInput);
+    numbersAndOperations = convertInputToArray(userInput);    
     result = calculate(numbersAndOperations)[0][0];
     //console.log(result); 
     document.getElementById("resultText").value = result;
@@ -82,8 +82,9 @@ function convertInputToArray(input) {
         if (isNumber(input[i])) {
             //lets first check if this character is the last number in the input
             if (i == input.length - 1) {
-                //so lets push this last number with an empty string as operation symbole
-                myArray.push([input[i], ""]);
+                //so lets concatenate this last number to the intermediateNumber & push this intermediateNumber with an empty string as operation symbole
+                intermediateNumber = intermediateNumber + input[i];
+                myArray.push([intermediateNumber, ""]);
             }
             else {
                 //so we are still in the middle of the input lets keep building the intermediateNumber and move forward
