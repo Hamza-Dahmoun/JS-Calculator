@@ -82,6 +82,11 @@ span{
     }
 }
 @media screen and (max-width: 260px){
+    .input-text {  
+        margin-left: 0px; margin-right: 0px;
+        font-size:14px;
+        padding-right:2px;
+    }
     .container {
         padding: 1px;
         width: auto;
