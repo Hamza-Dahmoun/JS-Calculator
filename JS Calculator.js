@@ -29,11 +29,14 @@ function clearLastChar() {
 }
 
 function writeCharacter() {
-    //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc
+    //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4
     let newChar = event.target.innerText;
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     if (!isNumber(lastChar_inExpression) && !isNumber(newChar)) {
-        //Do nothing, because there are going to be two symboles in a row
+        //so our Expression ends already with an operation symbole and the user has input another operation symbole,
+        //lets remove the old one and consider the new one
+        //e.g: 15/9*4+-9 ==> 15/9*4-9
+        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression,newChar);
     }
     else {
         //This function write the characteres clicked to the arithmeticExpression input
