@@ -3,46 +3,47 @@ document.getElementById("clearAllButton").addEventListener("click", clearAll);
 document.getElementById("clearButton").addEventListener("click", clear);
 document.getElementById("equalButton").addEventListener("click", equalClick);
 let writingButtons = document.querySelectorAll('span.circle:not([id="clearAllButton"]):not([id="clearButton"]):not([id="equalButton"]):not(.deactivated-button)');
-for(let i = 0; i < writingButtons.length; i++){
+for (let i = 0; i < writingButtons.length; i++) {
     writingButtons[i].addEventListener("click", writeCharacter);
 }
-function clearAll(){
+function clearAll() {
     document.getElementById("arithmeticExpression").value = "";
     document.getElementById("resultText").value = "";
 }
-function clear(){
+function clear() {
     document.getElementById("arithmeticExpression").value = "";
 }
 let is_currentExpressionDone = false;
-function writeCharacter(){
+function writeCharacter() {
     //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc
     let newChar = event.target.innerText;
-    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length-1);
-    if(!isNumber(lastChar_inExpression) && !isNumber(newChar))
-    {
+    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
+    if (!isNumber(lastChar_inExpression) && !isNumber(newChar)) {
         //Do nothing, because there are going to be two symboles in a row
     }
-    else
-    {
+    else {
         //This function write the characteres clicked to the arithmeticExpression input
-    //But first we have to clear the OLD CALCULATED expression
-    if(is_currentExpressionDone){
-        //So this is the first character of a new expression, lets clear both input and the write the character
-        document.getElementById("resultText").value = "";
-        document.getElementById("arithmeticExpression").value = newChar;
-        is_currentExpressionDone = false;  
+        //But first we have to clear the OLD CALCULATED expression
+        if (is_currentExpressionDone) {
+            //So this is the first character of a new expression, lets clear both input and the write the character
+            document.getElementById("resultText").value = "";
+            document.getElementById("arithmeticExpression").value = newChar;
+            is_currentExpressionDone = false;
+        }
+        else {
+            //so this is not th first character of the expression, lets just add the new character to the expression
+            document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
+        }
     }
-    else{
-        //so this is not th first character of the expression, lets just add the new character to the expression
-        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
-    }
-    }            
 }
-function equalClick(){
-    //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
-    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
-    is_currentExpressionDone = true;
-    startCalculation();
+function equalClick() {
+    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
+    if (isNumber(lastChar_inExpression)) {
+        //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
+        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
+        is_currentExpressionDone = true;
+        startCalculation();
+    }
 }
 
 /************ END: adding events to buttons ***********/
@@ -54,11 +55,11 @@ let multiplicationCounter = 0;
 let additionCounter = 0;
 let subtractionCounter = 0;
 
-function startCalculation(){
+function startCalculation() {
     numbersAndOperations = convertInputToArray(userInput);
     result = calculate(numbersAndOperations)[0][0];
     //console.log(result); 
-    document.getElementById("resultText").value = result;   
+    document.getElementById("resultText").value = result;
 }
 
 
