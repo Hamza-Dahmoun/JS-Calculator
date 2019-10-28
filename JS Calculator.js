@@ -1,6 +1,6 @@
 /************ BEGIN: adding events to buttons ***********/
 document.getElementById("clearAllButton").addEventListener("click", clearAll);
-document.getElementById("clearButton").addEventListener("click", clear);
+document.getElementById("clearButton").addEventListener("click", clearLastChar);
 document.getElementById("equalButton").addEventListener("click", equalClick);
 let writingButtons = document.querySelectorAll('span.circle:not([id="clearAllButton"]):not([id="clearButton"]):not([id="equalButton"]):not(.deactivated-button)');
 for (let i = 0; i < writingButtons.length; i++) {
@@ -10,8 +10,9 @@ function clearAll() {
     document.getElementById("arithmeticExpression").value = "";
     document.getElementById("resultText").value = "";
 }
-function clear() {
-    document.getElementById("arithmeticExpression").value = "";
+function clearLastChar() {
+    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
+    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression,"");
 }
 let is_currentExpressionDone = false;
 function writeCharacter() {
