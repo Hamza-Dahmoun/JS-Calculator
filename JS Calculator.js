@@ -1,6 +1,7 @@
 /************ BEGIN: adding events to buttons ***********/
 document.getElementById("clearAllButton").addEventListener("click", clearAll);
 document.getElementById("clearButton").addEventListener("click", clear);
+document.getElementById("equalButton").addEventListener("click", equalClick);
 let writingButtons = document.querySelectorAll('span.circle:not([id="clearAllButton"]):not([id="clearButton"]):not([id="equalButton"]):not(.deactivated-button)');
 for(let i = 0; i < writingButtons.length; i++){
     writingButtons[i].addEventListener("click", writeCharacter);
@@ -15,6 +16,15 @@ function clear(){
 function writeCharacter(){
     //This function write the characteres clicked to the arithmeticExpression input
     document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + event.target.innerText;    
+}
+function equalClick(){
+    //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
+    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
+
+    startCalculation();
+}
+function startCalculation(){
+
 }
 /************ END: adding events to buttons ***********/
 let userInput = "15/9*5/7-3+2/8*3+6-10/5";
