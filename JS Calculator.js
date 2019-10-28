@@ -36,7 +36,8 @@ let subtractionCounter = 0;
 function startCalculation(){
     numbersAndOperations = convertInputToArray(userInput);
     result = calculate(numbersAndOperations)[0][0];
-    console.log(result);    
+    //console.log(result); 
+    document.getElementById("resultText").value = result;   
 }
 
 
