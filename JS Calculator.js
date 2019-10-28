@@ -13,7 +13,8 @@ function clear(){
     document.getElementById("arithmeticExpression").value = "";
 }
 function writeCharacter(){
-    
+    //This function write the characteres clicked to the arithmeticExpression input
+    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + event.target.innerText;    
 }
 /************ END: adding events to buttons ***********/
 let userInput = "15/9*5/7-3+2/8*3+6-10/5";
