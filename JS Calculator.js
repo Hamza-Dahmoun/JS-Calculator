@@ -1,3 +1,15 @@
+/************ BEGIN: Variables declaration part ***********/
+let is_currentExpressionDone = false;
+let userInput =  "15/9*5/7-3+2/8*3+6-10/5";/**/
+let numbersAndOperations = [];
+let result;
+let divisionCounter = 0;
+let multiplicationCounter = 0;
+let additionCounter = 0;
+let subtractionCounter = 0;
+/************ END: Variables declaration part ***********/
+
+
 /************ BEGIN: adding events to buttons ***********/
 document.getElementById("clearAllButton").addEventListener("click", clearAll);
 document.getElementById("clearButton").addEventListener("click", clearLastChar);
@@ -14,7 +26,7 @@ function clearLastChar() {
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression,"");
 }
-let is_currentExpressionDone = false;
+
 function writeCharacter() {
     //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc
     let newChar = event.target.innerText;
@@ -48,15 +60,12 @@ function equalClick() {
 }
 
 /************ END: adding events to buttons ***********/
-let userInput = "15/9*5/7-3+2/8*3+6-10/5";
-let numbersAndOperations = [];
-let result;
-let divisionCounter = 0;
-let multiplicationCounter = 0;
-let additionCounter = 0;
-let subtractionCounter = 0;
+
 
 function startCalculation() {
+    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
+    userInput = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression,"");
+    
     numbersAndOperations = convertInputToArray(userInput);
     result = calculate(numbersAndOperations)[0][0];
     //console.log(result); 
