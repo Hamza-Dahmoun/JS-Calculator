@@ -23,9 +23,7 @@ function equalClick(){
 
     startCalculation();
 }
-function startCalculation(){
 
-}
 /************ END: adding events to buttons ***********/
 let userInput = "15/9*5/7-3+2/8*3+6-10/5";
 let numbersAndOperations = [];
@@ -35,12 +33,13 @@ let multiplicationCounter = 0;
 let additionCounter = 0;
 let subtractionCounter = 0;
 
+function startCalculation(){
+    numbersAndOperations = convertInputToArray(userInput);
+    result = calculate(numbersAndOperations)[0][0];
+    console.log(result);    
+}
 
-numbersAndOperations = convertInputToArray(userInput);
 
-result = calculate(numbersAndOperations)[0][0];
-
-console.log(result);
 
 function convertInputToArray(input) {
     //This function will do the following: "10-6+9*8/2/2" ==> [[10,-], [6,+], [9,*], [8,/],[2,/],[2,""]]  
