@@ -7,6 +7,7 @@ let divisionCounter = 0;
 let multiplicationCounter = 0;
 let additionCounter = 0;
 let subtractionCounter = 0;
+clearAll();
 /************ END: Variables declaration part ***********/
 
 
@@ -58,7 +59,6 @@ function equalClick() {
         startCalculation();
     }
 }
-
 /************ END: adding events to buttons ***********/
 
 
