@@ -15,18 +15,28 @@ function clear(){
 }
 let is_currentExpressionDone = false;
 function writeCharacter(){
-    //This function write the characteres clicked to the arithmeticExpression input
-    //But first we have to clear the old calculated expression
+    //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc
+    let newChar = event.target.innerText;
+    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length-1);
+    if(!isNumber(lastChar_inExpression) && !isNumber(newChar))
+    {
+        //Do nothing, because there are going to be two symboles in a row
+    }
+    else
+    {
+        //This function write the characteres clicked to the arithmeticExpression input
+    //But first we have to clear the OLD CALCULATED expression
     if(is_currentExpressionDone){
         //So this is the first character of a new expression, lets clear both input and the write the character
         document.getElementById("resultText").value = "";
-        document.getElementById("arithmeticExpression").value = event.target.innerText;
+        document.getElementById("arithmeticExpression").value = newChar;
         is_currentExpressionDone = false;  
     }
     else{
         //so this is not th first character of the expression, lets just add the new character to the expression
-        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + event.target.innerText;
-    }        
+        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
+    }
+    }            
 }
 function equalClick(){
     //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
