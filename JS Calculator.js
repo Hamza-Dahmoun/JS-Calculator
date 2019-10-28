@@ -1,3 +1,20 @@
+/************ BEGIN: adding events to buttons ***********/
+document.getElementById("clearAllButton").addEventListener("click", clearAll);
+document.getElementById("clearButton").addEventListener("click", clear);
+let writingButtons = document.querySelectorAll('span.circle:not([id="clearAllButton"]):not([id="clearButton"]):not([id="equalButton"]):not(.deactivated-button)');
+for(let i = 0; i < writingButtons.length; i++){
+    writingButtons[i].addEventListener("click", writeCharacter);
+}
+function clearAll(){
+
+}
+function clear(){
+    
+}
+function writeCharacter(){
+    
+}
+/************ END: adding events to buttons ***********/
 let userInput = "15/9*5/7-3+2/8*3+6-10/5";
 let numbersAndOperations = [];
 let result;
