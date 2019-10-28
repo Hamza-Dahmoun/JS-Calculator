@@ -6,10 +6,11 @@ for(let i = 0; i < writingButtons.length; i++){
     writingButtons[i].addEventListener("click", writeCharacter);
 }
 function clearAll(){
-
+    document.getElementById("arithmeticExpression").value = "";
+    document.getElementById("resultText").value = "";
 }
 function clear(){
-    
+    document.getElementById("arithmeticExpression").value = "";
 }
 function writeCharacter(){
     
