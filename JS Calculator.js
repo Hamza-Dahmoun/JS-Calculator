@@ -13,14 +13,25 @@ function clearAll(){
 function clear(){
     document.getElementById("arithmeticExpression").value = "";
 }
+let is_currentExpressionDone = false;
 function writeCharacter(){
     //This function write the characteres clicked to the arithmeticExpression input
-    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + event.target.innerText;    
+    //But first we have to clear the old calculated expression
+    if(is_currentExpressionDone){
+        //So this is the first character of a new expression, lets clear both input and the write the character
+        document.getElementById("resultText").value = "";
+        document.getElementById("arithmeticExpression").value = event.target.innerText;
+        is_currentExpressionDone = false;  
+    }
+    else{
+        //so this is not th first character of the expression, lets just add the new character to the expression
+        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + event.target.innerText;
+    }        
 }
 function equalClick(){
     //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
     document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
-
+    is_currentExpressionDone = true;
     startCalculation();
 }
 
