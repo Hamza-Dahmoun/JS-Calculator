@@ -30,15 +30,20 @@ function clearLastChar() {
 
 function writeCharacter() {
     let newChar = event.target.innerText;
-    //First of all lets prevent user starts his input by an operation symbole
+    //First of all, lets prevent user starts his input by an operation symbole
     if( document.getElementById("arithmeticExpression").value.length==0 && (!isNumber(newChar) || newChar==".")){
         //do nothing
         return;
     }
-    //Second of all lets prevent user for typing '.' more than once in a row, or "." followed by an operation
+    //Second of all, lets prevent user for typing '.' more than once in a row, or "." followed by an operation
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     if(lastChar_inExpression == "." && ((!isNumber(newChar) || newChar=="."))){
         //do nothing
+        return;
+    }
+    //Third of all, lets check if user clicked an operation button just after clicking equal "="
+    if (is_currentExpressionDone && !isNumber(newChar)){
+        //do nothing, because it is an operation symbole after an already calculated expression
         return;
     }
 
