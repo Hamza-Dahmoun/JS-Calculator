@@ -35,8 +35,15 @@ function writeCharacter() {
         //do nothing
         return;
     }
-    //Now Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4    
+    //Second of all lets prevent user for typing '.' more than once in a row, or "." followed by an operation
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
+    if(lastChar_inExpression == "." && ((!isNumber(newChar) || newChar=="."))){
+        //do nothing
+        return;
+    }
+
+
+    //Now Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4        
     if (!isNumber(lastChar_inExpression) && lastChar_inExpression != "%" && !isNumber(newChar)) {
         //so our Expression ends already with an operation symbole and the user has input another operation symbole,
         //lets remove the old one and consider the new one
@@ -91,12 +98,18 @@ function writeCharacter() {
     }
 }
 function equalClick() {
-    //before doing anything, there is a scenario of user typed "98%" then
+    //First of all, before doing anything, there is a scenario of user typed "98%" then
     //he tried to type a number so the animation started to guide him to type
     //an operation, but he just decided to ignore all that and click on "=",
     //in this case we need to remove the animation 
     if(document.getElementById("divisionButton").className.includes("highlighted-button")){
         removeAnimationFromOperationsButtons();
+    }
+
+    //Second of all, lets check if the expression ends with '.', if so then do nothing
+    if("." == document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1)){
+        //do nothng
+        return;
     }
 
     //Now proceed the normal work of "="
