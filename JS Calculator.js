@@ -105,7 +105,6 @@ function convertInputToArray(input) {
                 myArray.push([intermediateNumber, input[i]]);
                 intermediateNumber = "";
                 increaseOperationCounter(input[i]);
-
             }
             else {
                 //so it is case (2-) explained above
