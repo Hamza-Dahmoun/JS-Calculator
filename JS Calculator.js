@@ -91,6 +91,15 @@ function writeCharacter() {
     }
 }
 function equalClick() {
+    //before doing anything, there is a scenario of user typed "98%" then
+    //he tried to type a number so the animation started to guide him to type
+    //an operation, but he just decided to ignore all that and click on "=",
+    //in this case we need to remove the animation 
+    if(document.getElementById("divisionButton").className.includes("highlighted-button")){
+        removeAnimationFromOperationsButtons();
+    }
+
+    //Now proceed the normal work of "="
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     if (isNumber(lastChar_inExpression) || lastChar_inExpression == '%') {
         //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
