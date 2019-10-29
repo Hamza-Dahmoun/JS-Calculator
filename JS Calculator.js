@@ -29,8 +29,13 @@ function clearLastChar() {
 }
 
 function writeCharacter() {
-    //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4
     let newChar = event.target.innerText;
+    //First of all lets prevent user starts his input by an operation symbole
+    if(!isNumber(newChar) || newChar=="."){
+        //do nothing
+        return;
+    }
+    //Now Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4    
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     if (!isNumber(lastChar_inExpression) && lastChar_inExpression != "%" && !isNumber(newChar)) {
         //so our Expression ends already with an operation symbole and the user has input another operation symbole,
@@ -46,13 +51,13 @@ function writeCharacter() {
             //lets prevent user from typing a number, and force him to type an operation symbole
             //why: 48%*5 = 0.48*5 = 2.4
             //and: 48%5 => 0.48 5 and this is not calculable
-            if(isNumber(newChar)){
+            if (isNumber(newChar)) {
                 //so user already typed '%' and want to type a number, this is forbidden
                 //lets do some animation to operations buttons to guide the user
-                animateOperationsButtons();         
+                animateOperationsButtons();
                 //this animation will be removed once the user clicks on an operation button       
             }
-            else{
+            else {
                 //so user want to type an operation symbole after '%', it is okey, lets proceed
                 //but lets first remove the animation from the operation buttons
                 removeAnimationFromOperationsButtons();
@@ -103,9 +108,9 @@ function startCalculation() {
     userInput = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression, "");
 
     numbersAndOperations = convertInputToArray(userInput);
-    
+
     result = calculate(numbersAndOperations)[0][0];
-    
+
     document.getElementById("resultText").value = result;
 }
 
@@ -145,7 +150,7 @@ function convertInputToArray(input) {
                 //so it is case (2-) explained above
                 intermediateNumber = parseFloat(intermediateNumber) / 100;
                 //Now lets check if this '%' is the last char in the expression
-                if(i == input.length - 1){
+                if (i == input.length - 1) {
                     //so there were no characters in the expression after the '%'
                     myArray.push([intermediateNumber, ""]);
                 }
@@ -258,14 +263,14 @@ function calculateAddition(array) {
     return array;
 }
 
-function animateOperationsButtons(){
+function animateOperationsButtons() {
     document.getElementById("divisionButton").className = "circle light-gray highlighted-button";
     document.getElementById("multiplicationButton").className = "circle light-gray highlighted-button";
     document.getElementById("subtractionButton").className = "circle light-gray highlighted-button";
     document.getElementById("additionButton").className = "circle light-gray highlighted-button";
     document.getElementById("ratioButton").className = "circle light-gray highlighted-button";
 }
-function removeAnimationFromOperationsButtons(){
+function removeAnimationFromOperationsButtons() {
     document.getElementById("divisionButton").className = "circle light-gray";
     document.getElementById("multiplicationButton").className = "circle light-gray";
     document.getElementById("subtractionButton").className = "circle light-gray";
