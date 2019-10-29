@@ -53,7 +53,7 @@ function writeCharacter() {
             else{
                 //so user want to type an operation symbole after '%', it is okey, lets proceed
                 if (is_currentExpressionDone) {
-                    //So this is the first character of a new expression, lets clear both input and the write the character
+                    //So this is the first character of a new expression, lets clear both input and then write the character
                     document.getElementById("resultText").value = "";
                     document.getElementById("arithmeticExpression").value = newChar;
                     is_currentExpressionDone = false;
@@ -83,7 +83,7 @@ function writeCharacter() {
 }
 function equalClick() {
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
-    if (isNumber(lastChar_inExpression)) {
+    if (isNumber(lastChar_inExpression) || lastChar_inExpression == '%') {
         //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
         document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
         is_currentExpressionDone = true;
@@ -94,12 +94,14 @@ function equalClick() {
 
 
 function startCalculation() {
+    //first lets replace '=' with an empty string
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     userInput = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression, "");
 
     numbersAndOperations = convertInputToArray(userInput);
+    
     result = calculate(numbersAndOperations)[0][0];
-    //console.log(result); 
+    
     document.getElementById("resultText").value = result;
 }
 
@@ -127,7 +129,8 @@ function convertInputToArray(input) {
             //1- If it is an operation symbole we will push this symbole with the previously built intermediateNumber to the array
             //and increase the operations counter
             //2- If it is a percentage symbole we will calculate the percentage of the previously built intermediateNumber (divide it by 100)
-            //and the result will be considered as the intermediateNumber, and move forward to the next input character
+            //and the result will be considered as the intermediateNumber, and move forward to the next input character 
+            //and move forward to the next input character if there are any, else, just push the new intermediateNumber to the array with an empty string as operation symbole
             if (input[i] != "%") {
                 //so it is case (1-) explained above
                 myArray.push([intermediateNumber, input[i]]);
@@ -137,6 +140,7 @@ function convertInputToArray(input) {
             else {
                 //so it is case (2-) explained above
                 intermediateNumber = parseFloat(intermediateNumber) / 100;
+                
             }
         }
     }
