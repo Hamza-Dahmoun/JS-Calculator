@@ -169,3 +169,15 @@ span{
     }
     
 }
+
+
+/*The following is only used to guide the user to working buttons*/
+.highlighted-button{
+    animation-name:colorize;/*Use 'pulse' animation to animate the class '.heart'*/
+    animation-duration:3s;
+    animation-iteration-count:infinite;
+}
+@keyframes colorize{            
+    0%{background-color:#efefef;}
+    50%{background-color:#81F7F3;} 
+}

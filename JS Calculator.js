@@ -48,10 +48,14 @@ function writeCharacter() {
             //and: 48%5 => 0.48 5 and this is not calculable
             if(isNumber(newChar)){
                 //so user already typed '%' and want to type a number, this is forbidden
-                //lets do some animation to inform user abt it
+                //lets do some animation to operations buttons to guide the user
+                animateOperationsButtons();         
+                //this animation will be removed once the user clicks on an operation button       
             }
             else{
                 //so user want to type an operation symbole after '%', it is okey, lets proceed
+                //but lets first remove the animation from the operation buttons
+                removeAnimationFromOperationsButtons();
                 if (is_currentExpressionDone) {
                     //So this is the first character of a new expression, lets clear both input and then write the character
                     document.getElementById("resultText").value = "";
@@ -254,4 +258,18 @@ function calculateAddition(array) {
     return array;
 }
 
+function animateOperationsButtons(){
+    document.getElementById("divisionButton").className = "circle light-gray highlighted-button";
+    document.getElementById("multiplicationButton").className = "circle light-gray highlighted-button";
+    document.getElementById("subtractionButton").className = "circle light-gray highlighted-button";
+    document.getElementById("additionButton").className = "circle light-gray highlighted-button";
+    document.getElementById("ratioButton").className = "circle light-gray highlighted-button";
+}
+function removeAnimationFromOperationsButtons(){
+    document.getElementById("divisionButton").className = "circle light-gray";
+    document.getElementById("multiplicationButton").className = "circle light-gray";
+    document.getElementById("subtractionButton").className = "circle light-gray";
+    document.getElementById("additionButton").className = "circle light-gray";
+    document.getElementById("ratioButton").className = "circle light-gray";
+}
 
