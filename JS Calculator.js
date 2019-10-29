@@ -32,25 +32,53 @@ function writeCharacter() {
     //Before doing anything lets forbid writing two characters in a row like +*, /*, -*, -*...etc by erasing the old operation symbole and write the new operation symbole input by user, e.g: 12/5*+4 ==> 12/5+4
     let newChar = event.target.innerText;
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
-    if (!isNumber(lastChar_inExpression) && !isNumber(newChar)) {
+    if (!isNumber(lastChar_inExpression) && lastChar_inExpression != "%" && !isNumber(newChar)) {
         //so our Expression ends already with an operation symbole and the user has input another operation symbole,
         //lets remove the old one and consider the new one
         //e.g: 15/9*4+-9 ==> 15/9*4-9
+        //e.g: 78%-15/9*4+-9 ==> 78%-15/9*4-9 (N.B: User should be forced to enter an operation symbole after '%')
         document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression, newChar);
     }
     else {
-        //This function write the characteres clicked to the arithmeticExpression input
-        //But first we have to clear the OLD CALCULATED expression
-        if (is_currentExpressionDone) {
-            //So this is the first character of a new expression, lets clear both input and the write the character
-            document.getElementById("resultText").value = "";
-            document.getElementById("arithmeticExpression").value = newChar;
-            is_currentExpressionDone = false;
+        //So it is not the case of two operations' symboles in a row
+        //But Now, we should check if lastChar_inExpression == '%' so that we force user to type an operation symbole not a number
+        if (lastChar_inExpression == '%') {
+            //lets prevent user from typing a number, and force him to type an operation symbole
+            //why: 48%*5 = 0.48*5 = 2.4
+            //and: 48%5 => 0.48 5 and this is not calculable
+            if(isNumber(newChar)){
+                //so user already typed '%' and want to type a number, this is forbidden
+                //lets do some animation to inform user abt it
+            }
+            else{
+                //so user want to type an operation symbole after '%', it is okey, lets proceed
+                if (is_currentExpressionDone) {
+                    //So this is the first character of a new expression, lets clear both input and the write the character
+                    document.getElementById("resultText").value = "";
+                    document.getElementById("arithmeticExpression").value = newChar;
+                    is_currentExpressionDone = false;
+                }
+                else {
+                    //so this is not th first character of the expression, lets just add the new character to the expression
+                    document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
+                }
+            }
         }
         else {
-            //so this is not th first character of the expression, lets just add the new character to the expression
-            document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
+            //This function write the characteres clicked to the arithmeticExpression input
+            //But first we have to clear the OLD CALCULATED expression
+            if (is_currentExpressionDone) {
+                //So this is the first character of a new expression, lets clear both input and the write the character
+                document.getElementById("resultText").value = "";
+                document.getElementById("arithmeticExpression").value = newChar;
+                is_currentExpressionDone = false;
+            }
+            else {
+                //so this is not th first character of the expression, lets just add the new character to the expression
+                document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + newChar;
+            }
         }
+
     }
 }
 function equalClick() {
@@ -108,7 +136,7 @@ function convertInputToArray(input) {
             }
             else {
                 //so it is case (2-) explained above
-                intermediateNumber = parseFloat(intermediateNumber)/100;
+                intermediateNumber = parseFloat(intermediateNumber) / 100;
             }
         }
     }
