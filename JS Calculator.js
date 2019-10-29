@@ -31,7 +31,7 @@ function clearLastChar() {
 function writeCharacter() {
     let newChar = event.target.innerText;
     //First of all lets prevent user starts his input by an operation symbole
-    if(!isNumber(newChar) || newChar=="."){
+    if( document.getElementById("arithmeticExpression").value.length==0 && (!isNumber(newChar) || newChar==".")){
         //do nothing
         return;
     }
