@@ -140,7 +140,11 @@ function convertInputToArray(input) {
             else {
                 //so it is case (2-) explained above
                 intermediateNumber = parseFloat(intermediateNumber) / 100;
-                
+                //Now lets check if this '%' is the last char in the expression
+                if(i == input.length - 1){
+                    //so there were no characters in the expression after the '%'
+                    myArray.push([intermediateNumber, ""]);
+                }
             }
         }
     }
