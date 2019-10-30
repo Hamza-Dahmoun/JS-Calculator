@@ -162,9 +162,12 @@ document.onkeydown = function(e){
         }
         else{
             writeCharacter(e.key);
-        }
-        
+        }        
     }    
+    else if(keyCode=="8"){
+        //so user pressed backspace button '<--' we will call clear() function to clear one char
+        clearLastChar();
+    }
 }
 function isCalculatorPadClicked(code){
     //The following are the keyCodes of the calculatorPad
