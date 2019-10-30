@@ -158,7 +158,6 @@ document.onkeydown = function(e){
         //but is user clicked on "Enter" we w'll write in UI equal symbole '='
         isCalculatorPadPressed = true;
         if(keyCode == "13"){
-            //writeCharacter("=");
             equalClick();
         }
         else{
