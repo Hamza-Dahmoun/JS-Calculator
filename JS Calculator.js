@@ -36,29 +36,29 @@ function writeCharacter(CalculatorPad_keyTextValue) {
     let newChar = "";
     //We know that this function can be called when user clicks on a button in our calculator, or
     //or when user presses a key on the calculatorPad in the computer, lets first check what triggered this function and then proceed writing the new character in our calculator UI 
-    if(isCalculatorPadPressed){
+    if (isCalculatorPadPressed) {
         //so the function has been called becuz user pressed one calculator key
         newChar = CalculatorPad_keyTextValue;
         isCalculatorPadPressed = false;
     }
-    else{
+    else {
         //so this function has been called becuz user clicked on the buttons in the page, not on the keyboard
         newChar = event.target.innerText;
     }
-    
+
     //First of all, lets prevent user starts his input by an operation symbole
-    if( document.getElementById("arithmeticExpression").value.length==0 && (!isNumber(newChar) || newChar==".")){
+    if (document.getElementById("arithmeticExpression").value.length == 0 && (!isNumber(newChar) || newChar == ".")) {
         //do nothing
         return;
     }
     //Second of all, lets prevent user for typing '.' more than once in a row, or "." followed by an operation
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
-    if(lastChar_inExpression == "." && ((!isNumber(newChar) || newChar=="."))){
+    if (lastChar_inExpression == "." && ((!isNumber(newChar) || newChar == "."))) {
         //do nothing
         return;
     }
     //Third of all, lets check if user clicked an operation button just after clicking equal "="
-    if (is_currentExpressionDone && !isNumber(newChar)){
+    if (is_currentExpressionDone && !isNumber(newChar)) {
         //do nothing, because it is an operation symbole after an already calculated expression
         return;
     }
@@ -123,12 +123,12 @@ function equalClick() {
     //he tried to type a number so the animation started to guide him to type
     //an operation, but he just decided to ignore all that and click on "=",
     //in this case we need to remove the animation 
-    if(document.getElementById("divisionButton").className.includes("highlighted-button")){
+    if (document.getElementById("divisionButton").className.includes("highlighted-button")) {
         removeAnimationFromOperationsButtons();
     }
 
     //Second of all, lets check if the expression ends with '.', if so then do nothing
-    if("." == document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1)){
+    if ("." == document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1)) {
         //do nothng
         return;
     }
@@ -146,30 +146,33 @@ function equalClick() {
 //
 //
 /************ BEGIN: functions called directly by user behaving with PC CalculatorPad ***********/
-document.onkeydown = function(e){
+document.onkeydown = function (e) {
     //e.keyCode represents a code that is linked to a button in the keyboard
     //e.key represents  the text in the clicked key of the keyboard
 
     //when user uses the keyboard of his device, we'll check whether he clicked a button in the calculatorPad or not
     //if so we will trigger the writeCharacter() function with the text in the clicked button as a parameter
     var keyCode = e.keyCode;
-    if(isCalculatorPadClicked(keyCode)){
+    if (isCalculatorPadClicked(keyCode)) {
         //so lets write what the user clicked in our UI
         //but is user clicked on "Enter" we w'll write in UI equal symbole '='
         isCalculatorPadPressed = true;
-        if(keyCode == "13"){
+        if (keyCode == "13") {
             equalClick();
         }
-        else{
+        else if (keyCode == "8") {
+            //so user pressed backspace button '<--' we will call clear() function to clear one char
+            clearLastChar();
+        }
+        else {
             writeCharacter(e.key);
-        }        
-    }    
-    else if(keyCode=="8"){
-        //so user pressed backspace button '<--' we will call clear() function to clear one char
-        clearLastChar();
+        }
+        //lets now animate the button of our UI that corresponds to the one clicked by user in his calculatorPad
+        animateClickedButton(keyCode);
     }
+
 }
-function isCalculatorPadClicked(code){
+function isCalculatorPadClicked(code) {
     //The following are the keyCodes of the calculatorPad
     /*
     button --> keyCode
@@ -189,18 +192,78 @@ function isCalculatorPadClicked(code){
     '.' --> 110
     '/' --> 111 
     'Enter' --> 13
+    'Backspace' --> 8
     */
-    if(code == "96" || code == "97" || code == "98" || code == "99" || code == "100"
-    || code == "101" || code == "102" || code == "103" || code == "104" || code == "105"
-    || code == "106" || code == "107" || code == "109" || code == "110" || code == "111"
-    || code == "13"){
+    if (code == "96" || code == "97" || code == "98" || code == "99" || code == "100"
+        || code == "101" || code == "102" || code == "103" || code == "104" || code == "105"
+        || code == "106" || code == "107" || code == "109" || code == "110" || code == "111"
+        || code == "13" || code == "8") {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
-
+function animateClickedButton(code) {
+    let buttonId = "";
+    let correspondingToClickedButton = "";
+    switch (code) {
+        case 96:
+            buttonId = "button_zero";
+            break;
+        case 97:
+            buttonId = "button_one";
+            break;
+        case 98:
+            buttonId = "button_two";
+            break;
+        case 99:
+            buttonId = "button_three";
+            break;
+        case 100:
+            buttonId = "button_four";
+            break;
+        case 101:
+            buttonId = "button_five";
+            break;
+        case 102:
+            buttonId = "button_six";
+            break;
+        case 103:
+            buttonId = "button_seven";
+            break;
+        case 104:
+            buttonId = "button_eight";
+            break;
+        case 105:
+            buttonId = "button_nine";
+            break;
+        case 106:
+            buttonId = "multiplicationButton";
+            break;
+        case 107:
+            buttonId = "additionButton";
+            break;
+        case 109:
+            buttonId = "subtractionButton";
+            break;
+        case 110:
+            buttonId = "dotButton";
+            break;
+        case 111:
+            buttonId = "divisionButton";
+            break;
+        case 13:
+            buttonId = "equalButton";
+            break;
+        case 8:
+            buttonId = "clearButton";
+            break;
+    }
+    correspondingToClickedButton = document.getElementById(buttonId);
+    correspondingToClickedButton.style.animationName="highlight-pc-calculatorPad-clicked-button-inUI";
+    correspondingToClickedButton.style.animationDuration="0.5s";
+}
 /************ END: functions called directly by user behaving with PC CalculatorPad ***********/
 
 
@@ -208,7 +271,7 @@ function isCalculatorPadClicked(code){
 
 /************************ BEGIN: functions used for calculator logic **********************/
 function startCalculation() {
-    
+
     userInput = document.getElementById("arithmeticExpression").value;
 
     numbersAndOperations = convertInputToArray(userInput);

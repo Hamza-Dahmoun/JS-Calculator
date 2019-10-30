@@ -179,6 +179,15 @@ span{
 }
 
 
+/* The following animation will be called by js code when user clicks on
+PC calculatorPad.... if user clicks on '9' on his calculatorPad
+then the number 9 in the UI will be animated with this */
+@keyframes highlight-pc-calculatorPad-clicked-button-inUI{            
+    0%{background-color:#fff;}
+    50%{background-color:#efefef;}
+    100%{background-color:#efefef;} 
+}
+
 /*The following is only used to guide the user to working buttons*/
 .highlighted-button{
     animation-name:colorize;/*Use 'pulse' animation to animate the class '.heart'*/
