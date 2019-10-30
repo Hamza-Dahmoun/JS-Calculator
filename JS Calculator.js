@@ -9,8 +9,8 @@ let additionCounter = 0;
 let subtractionCounter = 0;
 clearAll();
 /************ END: Variables declaration part ***********/
-
-
+//
+//
 /************ BEGIN: adding events to buttons ***********/
 document.getElementById("clearAllButton").addEventListener("click", clearAll);
 document.getElementById("clearButton").addEventListener("click", clearLastChar);
@@ -19,6 +19,10 @@ let writingButtons = document.querySelectorAll('span.circle:not([id="clearAllBut
 for (let i = 0; i < writingButtons.length; i++) {
     writingButtons[i].addEventListener("click", writeCharacter);
 }
+/************ END: adding events to buttons ***********/
+//
+//
+/************ BEGIN: functions called directly by user behaving with UI ***********/
 function clearAll() {
     document.getElementById("arithmeticExpression").value = "";
     document.getElementById("resultText").value = "";
@@ -27,9 +31,21 @@ function clearLastChar() {
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression, "");
 }
-
-function writeCharacter() {
-    let newChar = event.target.innerText;
+let isCalculatorPadPressed = false;
+function writeCharacter(CalculatorPad_keyTextValue) {
+    let newChar = "";
+    //We know that this function can be called when user clicks on a button in our calculator, or
+    //or when user presses a key on the calculatorPad in the computer, lets first check what triggered this function and then proceed writing the new character in our calculator UI 
+    if(isCalculatorPadPressed){
+        //so the function has been called becuz user pressed one calculator key
+        newChar = CalculatorPad_keyTextValue;
+        isCalculatorPadPressed = false;
+    }
+    else{
+        //so this function has been called becuz user clicked on the buttons in the page, not on the keyboard
+        newChar = event.target.innerText;
+    }
+    
     //First of all, lets prevent user starts his input by an operation symbole
     if( document.getElementById("arithmeticExpression").value.length==0 && (!isNumber(newChar) || newChar==".")){
         //do nothing
@@ -126,9 +142,61 @@ function equalClick() {
         startCalculation();
     }
 }
-/************ END: adding events to buttons ***********/
+/************ END: functions called directly by user behaving with UI ***********/
+//
+//
+/************ BEGIN: functions called directly by user behaving with PC CalculatorPad ***********/
+document.onkeydown = function(e){
+    //e.keyCode represents a code that is linked to a button in the keyboard
+    //e.key represents  the text in the clicked key of the keyboard
+
+    //when user uses the keyboard of his device, we'll check whether he clicked a button in the calculatorPad or not
+    //if so we will trigger the writeCharacter() function with the text in the clicked button as a parameter
+    var keyCode = e.keyCode;
+    if(isCalculatorPadClicked(keyCode)){
+        //so lets write what the user clicked in our UI
+        isCalculatorPadPressed = true;
+        writeCharacter(e.key);
+    }    
+}
+function isCalculatorPadClicked(code){
+    //The following are the keyCodes of the calculatorPad
+    /*
+    button --> keyCode
+    '0' --> 96
+    '1' --> 97
+    '2' --> 98
+    '3' --> 99
+    '4' --> 100
+    '5' --> 101
+    '6' --> 102
+    '7' --> 103
+    '8' --> 104
+    '9' --> 105
+    '*' --> 106
+    '+' --> 107
+    '-' --> 109
+    '.' --> 110
+    '/' --> 111 
+    'Enter' --> 13
+    */
+    if(code == "96" || code == "97" || code == "98" || code == "99" || code == "100"
+    || code == "101" || code == "102" || code == "103" || code == "104" || code == "105"
+    || code == "106" || code == "107" || code == "109" || code == "110" || code == "111"
+    || code == "13"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+/************ END: functions called directly by user behaving with PC CalculatorPad ***********/
 
 
+
+
+/************************ BEGIN: functions used for calculator logic **********************/
 function startCalculation() {
     //first lets replace '=' with an empty string
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
@@ -140,7 +208,6 @@ function startCalculation() {
 
     document.getElementById("resultText").value = result;
 }
-
 
 
 function convertInputToArray(input) {
