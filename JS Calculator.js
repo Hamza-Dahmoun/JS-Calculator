@@ -137,7 +137,7 @@ function equalClick() {
     let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
     if (isNumber(lastChar_inExpression) || lastChar_inExpression == '%') {
         //this function add the equal symbole (=) to the user input, calculate the result and display it in the second input
-        document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
+        //document.getElementById("arithmeticExpression").value = document.getElementById("arithmeticExpression").value + "=";
         is_currentExpressionDone = true;
         startCalculation();
     }
@@ -205,15 +205,14 @@ function isCalculatorPadClicked(code){
 
 /************************ BEGIN: functions used for calculator logic **********************/
 function startCalculation() {
-    //first lets replace '=' with an empty string
-    let lastChar_inExpression = document.getElementById("arithmeticExpression").value.charAt(document.getElementById("arithmeticExpression").value.length - 1);
-    userInput = document.getElementById("arithmeticExpression").value.replace(lastChar_inExpression, "");
+    
+    userInput = document.getElementById("arithmeticExpression").value;
 
     numbersAndOperations = convertInputToArray(userInput);
 
     result = calculate(numbersAndOperations)[0][0];
 
-    document.getElementById("resultText").value = result;
+    document.getElementById("resultText").value = "= " + result;
 }
 
 
