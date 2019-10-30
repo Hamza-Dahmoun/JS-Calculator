@@ -22,10 +22,14 @@
     font-size:18px;
     padding-right:5px;
 }
+#resultText{
+    color:  #fc7e15 ;
+}
 
+/*
 #result{
     margin-bottom: 25px;
-}
+}*/
 
 .circle {
     height: 50px;
